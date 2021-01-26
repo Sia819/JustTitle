@@ -1,0 +1,189 @@
+﻿<UserControl x:Class="WindowTitleControl.CostomTitle"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WindowTitleControl"
+             mc:Ignorable="d"
+             Background="White"
+             d:DesignHeight="200" d:DesignWidth="500">
+    <UserControl.DataContext>
+        <local:CostomTitleViewModel/>
+    </UserControl.DataContext>
+
+    <StackPanel>
+        <Grid Name="TitleBar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="46"/>
+                <ColumnDefinition Width="46"/>
+                <ColumnDefinition Width="46"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="123"
+                   VerticalAlignment="Center"
+                   Margin="10 0"
+                   />
+            <!-- 최소화 path 1 - "누운막대" -->
+            <!--<Path Grid.Column="1" Data="M0,0 1,0" Fill="Transparent" HorizontalAlignment="Center" Height="1" Stretch="Fill" Stroke="Black" VerticalAlignment="Center" Width="11" Margin="2 1 0 0"  />-->
+            <!-- 최소화 path 2 - "누운막대" -->
+            <!--<Path Grid.Column="1" Data="M2048 1229v-205h-2048v205h2048z" Fill="Transparent" HorizontalAlignment="Center" Height="1" Stretch="Fill" Stroke="Black" VerticalAlignment="Center" Width="11" Margin="2 1 0 0"  />-->
+
+            <!-- 닫기 path 1+2 - "x자표시" -->
+            <!--<Path Grid.Column="3" Data="M0,0 1,1" Fill="Transparent" HorizontalAlignment="Center" Height="10" Stretch="Fill" Stroke="Black" VerticalAlignment="Center" Width="10"/>-->
+            <!--<Path Grid.Column="3" Data="M1,0 0,1" Fill="Transparent" HorizontalAlignment="Center" Height="10" Stretch="Fill" Stroke="Black" VerticalAlignment="Center" Width="10"/>-->
+
+            <!-- Minimize Button -->
+            <Button Grid.Column="1" Width="46"
+                Height="30"
+                HorizontalContentAlignment="Center"
+                BorderThickness="0"
+                Name="MinimizeButton">
+                <Button.Resources>
+                    <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
+                    <Style x:Key="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter" TargetType="Button">
+                        <Setter Property="Background" Value="#44AAAAAA"/>
+                    </Style>
+                    <Style x:Key="Button:not(:pointerover) /template/ ContentPresenter#PART_ContentPresenter" TargetType="Button">
+                        <Setter Property="Background" Value="Transparent"/>
+                    </Style>
+                </Button.Resources>
+                <Path Margin="14,0,14,0"
+                  Stretch="Uniform"
+                  Fill="Black"
+                  Stroke="White"
+                  Data="M2048 1229v-205h-2048v205h2048z"></Path>
+                <!-- Path.Fill - Dynamic Color -->
+                <!--Fill="{DynamicResource SystemControlForegroundBaseHighBrush}"-->
+            </Button>
+            <!-- Maximize Button -->
+            <Path Grid.Column="2" Data="M0,0 1,0 1,1 0,1 z" Fill="Transparent" HorizontalAlignment="Center" Height="10" Stretch="Fill" Stroke="Black" VerticalAlignment="Center" Width="10"/>
+            <!-- Close Button -->
+            <Button Grid.Column="3"  
+                    Width="46"
+                    VerticalAlignment="Stretch"
+                    BorderThickness="0"
+                    Name="CloseButton">
+                <Button.Resources>
+                    <Path x:Key="CloseWindow_Path" 
+                          Margin="16,0,16,0"
+                          Name="Close_Path"
+                          Stretch="Uniform"
+                          Data="M1169 1024l879 -879l-145 -145l-879 879l-879 -879l-145 145l879 879l-879 879l145 145l879 -879l879 879l145 -145z" />
+                    <!--
+                    <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
+                    <Style x:Key="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter" TargetType="Button">
+                        <Setter Property="Background" Value="Red"/>
+                    </Style>
+                    <Style x:Key="Button:not(:pointerover) /template/ ContentPresenter#PART_ContentPresenter" TargetType="Button">
+                        <Setter Property="Background" Value="Transparent"/>
+                    </Style>
+                    <Style x:Key="Button:pointerover > Path" TargetType="Path">
+                        <Setter Property="Fill" Value="White"/>
+                    </Style>
+                    <Style x:Key="Button:not(:pointerover) > Path" TargetType="Path">
+                        --><!--<Setter Property="Fill" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>--><!--
+                    </Style>-->
+                </Button.Resources>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <!-- 기본배경은 흰색 -->
+                        <Setter Property="Background" Value="White"/>   
+                        
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Content" Value=""/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                                <Setter Property="Content" Value="{StaticResource CloseWindow_Path}" />
+                            </Trigger>
+                            
+                        </Style.Triggers>
+
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+        <Rectangle Fill="{DynamicResource myBrush}" Height="10"/>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50" Height="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="{x:Null}" Margin="50,0,0,0">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="Red"/>
+                            <Setter Property="Background" Value="Red"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <StackPanel>
+            <TextBox Name="input"/>
+            <Button>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Content" Value="DataTrigger Before"></Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=input, Path=Text}" Value="1">
+                                <Setter Property="Content" Value="Changed"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+
+
+        <Grid>
+            <TextBlock Name="lblStyled" Text="Hello, styled world!" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0:0:0.300" Storyboard.TargetProperty="FontSize" To="28" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0:0:0.800" Storyboard.TargetProperty="FontSize" To="18" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+
+        
+
+    </StackPanel>
+</UserControl>
+
+    
