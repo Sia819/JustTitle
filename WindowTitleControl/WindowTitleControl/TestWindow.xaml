@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WindowTitleControl"
         mc:Ignorable="d"
-        Title="TestWindow" Height="400" Width="350">
+        Title="Just Debugging and Test" Height="400" Width="350">
     <Window.Resources>
         <Style x:Key="Minimize_Path_Style" TargetType="{x:Type Path}">
             <Setter Property="Data" Value="M0,0 9,0"/>
@@ -203,7 +203,7 @@
                 </Button>
             </StackPanel>
 
-
+            <!-- Mouse를 over하면 폰트가 커집니다. (Animation) -->
             <Grid>
                 <TextBlock Name="lblStyled" Text="Hello, styled world!" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock.Style>

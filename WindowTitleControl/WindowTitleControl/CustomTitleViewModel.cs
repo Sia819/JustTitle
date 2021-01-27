@@ -4,9 +4,9 @@ using System.Text;
 
 namespace WindowTitleControl
 {
-    public class CostomTitleViewModel
+    public class CustomTitleViewModel
     {
-        public CostomTitleViewModel()
+        public CustomTitleViewModel()
         {
             
         }

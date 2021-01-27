@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace WindowTitleControl
 {
     /// <summary>
-    /// CostomTitle.xaml에 대한 상호 작용 논리
+    /// CustomTitle.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class CostomTitle : UserControl
+    public partial class CustomTitle : UserControl
     {
-        public CostomTitle()
+        public CustomTitle()
         {
             InitializeComponent();
         }
