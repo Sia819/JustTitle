@@ -10,14 +10,103 @@
     <UserControl.DataContext>
         <local:CostomTitleViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style x:Key="Minimize_Path_Style" TargetType="{x:Type Path}">
+            <Setter Property="Data" Value="M0,0 11,0 11,2 0,2 z"/>
+            <Setter Property="Fill" Value="Black"/>
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="Stretch" Value="None"/>
+            <Setter Property="Stroke" Value="Transparent"/>
+            <Setter Property="Width" Value="10"/>
+            <Setter Property="StrokeThickness" Value="0"/>
+        </Style>
+        <Style x:Key="Maximize_Path_Style" TargetType="{x:Type Path}">
+            <Setter Property="Data" Value="M0,0 10,0 10,10 0,10 z"/>
+            <Setter Property="Fill" Value="Transparent"/>
+            <Setter Property="Height" Value="10"/>
+            <Setter Property="Stretch" Value="Fill"/>
+            <Setter Property="Stroke" Value="Black"/>
+            <Setter Property="Width" Value="10"/>
+        </Style>
+        <Style x:Key="Maximized_Path_Style" TargetType="{x:Type Path}">
+            <Setter Property="Data" Value="M2,2 2,0 9,0 9,7 7,7 7,9 0,9 0,2 7,2 7,7"/>
+            <Setter Property="Fill" Value="Transparent"/>
+            <Setter Property="Height" Value="10"/>
+            <Setter Property="Stretch" Value="Fill"/>
+            <Setter Property="Stroke" Value="Black"/>
+            <Setter Property="Width" Value="10"/>
+        </Style>
+        <Style x:Key="Close_Path_Style" TargetType="{x:Type Path}">
+            <!--Data="M1169 1024l879 -879l-145 -145l-879 879l-879 -879l-145 145l879 879l-879 879l145 145l879 -879l879 879l145 -145z"-->
+            <!--Data="M0,0 3,0 14,11 25,0 28,0 28,3 17,14 28,25 28,28 25,28 14,17 3,28 0,28 0,25 11,14 0,3 z"-->
+            <!-- 29px * 29px (두꺼움) -->
+            <!--Data="M0,0 1,0 5,4, 6,4 10,0 11,0 11,1 7,5 7,6 11,10 11,11 10,11 6,7 5,7 1,11 0,11 0,10 4,6 4,5 0,1 z"-->
+            <!-- 12px * 12px (두꺼움) -->
+            <!--Data="M0,0 1,0 5.5,4.5, 10,0 11,0 11,1 6.5,5.5 7,6 11,10 11,11 10,11 5.5,6.5 5,7 1,11 0,11 0,10 4.5,5.5 0,1 z"-->
+            <!-- 가운데 겹치는거 깎음 -->
+            <Setter Property="Data" Value="M0,0 0.7,0 5,4.3 9.3,0 L10,0 10,0.7 5.7,5 10,9.3 L10,10 9.3,10 5,5.7 0.7,10 L0,10 0,9.3 4.3,5 0,0.7 z"/>
+            <Setter Property="Fill" Value="Black"/>
+            <Setter Property="Height" Value="10"/>
+            <Setter Property="Stretch" Value="None"/>
+            <Setter Property="Stroke" Value="Transparent"/>
+            <Setter Property="Width" Value="10"/>
+            <Setter Property="StrokeThickness" Value="0"/>
+        </Style>
+        <!-- Title Button Style -->
+        <Style x:Key="TitleButton_Style" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" >
+                            <ContentPresenter Content="{TemplateBinding Content}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#e5e5e5"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- Close Button Style -->
+        <Style x:Key="CloseButton_Style" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" >
+                            <ContentPresenter Content="{TemplateBinding Content}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
 
     <StackPanel>
-        <Grid Name="TitleBar">
+        <Grid Name="TitleBar"
+              Height="30">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="46"/>
-                <ColumnDefinition Width="46"/>
-                <ColumnDefinition Width="46"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="123"
                    VerticalAlignment="Center"
@@ -33,86 +122,67 @@
             <!--<Path Grid.Column="3" Data="M1,0 0,1" Fill="Transparent" HorizontalAlignment="Center" Height="10" Stretch="Fill" Stroke="Black" VerticalAlignment="Center" Width="10"/>-->
 
             <!-- Minimize Button -->
-            <Button Grid.Column="1" Width="46"
-                Height="30"
-                HorizontalContentAlignment="Center"
-                BorderThickness="0"
-                Name="MinimizeButton">
-                <Button.Resources>
-                    <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
-                    <Style x:Key="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter" TargetType="Button">
-                        <Setter Property="Background" Value="#44AAAAAA"/>
-                    </Style>
-                    <Style x:Key="Button:not(:pointerover) /template/ ContentPresenter#PART_ContentPresenter" TargetType="Button">
-                        <Setter Property="Background" Value="Transparent"/>
-                    </Style>
-                </Button.Resources>
-                <Path Margin="14,0,14,0"
-                  Stretch="Uniform"
-                  Fill="Black"
-                  Stroke="White"
-                  Data="M2048 1229v-205h-2048v205h2048z"></Path>
+            <Button Grid.Column="1" 
+                    Name="MinimizeButton"
+                    Style="{StaticResource TitleButton_Style}"
+                    Height="29"
+                    Width="45"
+                    BorderThickness="0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    VerticalContentAlignment="Top"
+                    HorizontalContentAlignment="Left"
+                    Margin="1 0 0 0">
+                <Path Style="{StaticResource Minimize_Path_Style}"
+                      Margin="18 14 0 0"/>
+                <!--Data="M2048 1229v-205h-2048v205h2048z"-->
                 <!-- Path.Fill - Dynamic Color -->
                 <!--Fill="{DynamicResource SystemControlForegroundBaseHighBrush}"-->
             </Button>
             <!-- Maximize Button -->
-            <Path Grid.Column="2" Data="M0,0 1,0 1,1 0,1 z" Fill="Transparent" HorizontalAlignment="Center" Height="10" Stretch="Fill" Stroke="Black" VerticalAlignment="Center" Width="10"/>
-            <!-- Close Button -->
-            <Button Grid.Column="3"  
-                    Width="46"
-                    VerticalAlignment="Stretch"
+            <!--<Path Grid.Column="2" Data="M0,0 1,0 1,1 0,1 z" Fill="Transparent" HorizontalAlignment="Center" Height="10" Stretch="Fill" Stroke="Black" VerticalAlignment="Center" Width="10"/>-->
+            <Button Grid.Column="2"
+                    Name="MaximizeButton"
+                    Style="{StaticResource TitleButton_Style}"
+                    Height="29"
+                    Width="45"
                     BorderThickness="0"
-                    Name="CloseButton">
-                <Button.Resources>
-                    <Path x:Key="CloseWindow_Path" 
-                          Margin="16,0,16,0"
-                          Name="Close_Path"
-                          Stretch="Uniform"
-                          Data="M1169 1024l879 -879l-145 -145l-879 879l-879 -879l-145 145l879 879l-879 879l145 145l879 -879l879 879l145 -145z" />
-                    <!--
-                    <CornerRadius x:Key="ControlCornerRadius">0</CornerRadius>
-                    <Style x:Key="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter" TargetType="Button">
-                        <Setter Property="Background" Value="Red"/>
-                    </Style>
-                    <Style x:Key="Button:not(:pointerover) /template/ ContentPresenter#PART_ContentPresenter" TargetType="Button">
-                        <Setter Property="Background" Value="Transparent"/>
-                    </Style>
-                    <Style x:Key="Button:pointerover > Path" TargetType="Path">
-                        <Setter Property="Fill" Value="White"/>
-                    </Style>
-                    <Style x:Key="Button:not(:pointerover) > Path" TargetType="Path">
-                        --><!--<Setter Property="Fill" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"/>--><!--
-                    </Style>-->
-                </Button.Resources>
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <!-- 기본배경은 흰색 -->
-                        <Setter Property="Background" Value="White"/>   
-                        
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Background="{TemplateBinding Background}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Content" Value=""/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Red"/>
-                                <Setter Property="Content" Value="{StaticResource CloseWindow_Path}" />
-                            </Trigger>
-                            
-                        </Style.Triggers>
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    VerticalContentAlignment="Top"
+                    HorizontalContentAlignment="Left"
+                    Margin="1 0 0 0">
+                <Path Style="{DynamicResource Maximize_Path_Style}"
+                      Margin="17 9 0 0"/>
+            </Button>
+            <!-- Close Button -->
+            <Button Grid.Column="3" 
+                    Name="CloseButton"
+                    Style="{StaticResource CloseButton_Style}"
+                    Height="29"
+                    Width="45"
+                    BorderThickness="0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    VerticalContentAlignment="Top"
+                    HorizontalContentAlignment="Left"
+                    Margin="1 0 0 0">
 
-                    </Style>
-                </Button.Style>
+                <Path Style="{StaticResource Close_Path_Style}" 
+                      Margin="17 9 0 0"
+                      Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" /> <!-- Fill Binding is close color inversion -->
             </Button>
         </Grid>
         <Rectangle Fill="{DynamicResource myBrush}" Height="10"/>
-        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50" Height="50" HorizontalContentAlignment="Left" BorderBrush="{x:Null}" Foreground="{x:Null}" Margin="50,0,0,0">
+        <Button Content="Button" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Bottom" 
+                Width="50"
+                Height="50" 
+                HorizontalContentAlignment="Left" 
+                BorderBrush="{x:Null}" 
+                Foreground="{x:Null}" 
+                Margin="50,0,0,0">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Background" Value="White"/>
