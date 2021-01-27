@@ -156,11 +156,83 @@
                 </StackPanel.Resources>
             </StackPanel>
 
-            <Button Height="20">
-
-
+            <Button Content="Button" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Bottom" 
+                Width="50"
+                Height="50" 
+                HorizontalContentAlignment="Left" 
+                BorderBrush="{x:Null}" 
+                Foreground="{x:Null}" 
+                Margin="50,0,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                                <Setter Property="Background" Value="Red"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
             </Button>
-            <Path Data="M210.66667,52.373333" Fill="#FFF4F4F5" Height="100" Stretch="Fill" Stroke="Black" Width="1"/>
+
+            <StackPanel>
+                <TextBox Name="input"/>
+                <Button>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Content" Value="DataTrigger Before"></Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=input, Path=Text}" Value="1">
+                                    <Setter Property="Content" Value="Changed"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+
+
+            <Grid>
+                <TextBlock Name="lblStyled" Text="Hello, styled world!" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0:0:0.300" Storyboard.TargetProperty="FontSize" To="28" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0:0:0.800" Storyboard.TargetProperty="FontSize" To="18" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+
 
         </StackPanel>
     </ScrollViewer>

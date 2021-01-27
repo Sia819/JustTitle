@@ -14,6 +14,7 @@
         </Grid.RowDefinitions>
         <local:CostomTitle Grid.Row="0"/>
         <Grid Grid.Row="1">
+            <Rectangle Fill="Beige"/>
             <TextBlock Text="UI Area"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
