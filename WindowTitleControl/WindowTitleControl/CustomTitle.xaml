@@ -11,6 +11,7 @@
         <local:CustomTitleViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
+        <!-- #region Path Styles -->
         <Style x:Key="Minimize_Path_Style" TargetType="{x:Type Path}">
             <Setter Property="Data" Value="M0,0 11,0 11,2 0,2 z"/>
             <Setter Property="Fill" Value="Black"/>
@@ -20,7 +21,7 @@
             <Setter Property="Width" Value="10"/>
             <Setter Property="StrokeThickness" Value="0"/>
         </Style>
-        <Style x:Key="Maximize_Path_Style" TargetType="{x:Type Path}">
+        <Style x:Name="Maximize_Path_Style" x:Key="Maximize_Path_Style" TargetType="{x:Type Path}">
             <Setter Property="Data" Value="M0,0 10,0 10,10 0,10 z"/>
             <Setter Property="Fill" Value="Transparent"/>
             <Setter Property="Height" Value="10"/>
@@ -28,7 +29,7 @@
             <Setter Property="Stroke" Value="Black"/>
             <Setter Property="Width" Value="10"/>
         </Style>
-        <Style x:Key="Maximized_Path_Style" TargetType="{x:Type Path}">
+        <Style x:Name="Maximized_Path_Style" x:Key="Maximized_Path_Style" TargetType="{x:Type Path}">
             <Setter Property="Data" Value="M2,2 2,0 9,0 9,7 7,7 7,9 0,9 0,2 7,2 7,7"/>
             <Setter Property="Fill" Value="Transparent"/>
             <Setter Property="Height" Value="10"/>
@@ -37,20 +38,31 @@
             <Setter Property="Width" Value="10"/>
         </Style>
         <Style x:Key="Close_Path_Style" TargetType="{x:Type Path}">
-            <!--Value="M0,0 0.7,0 5,4.3 9.3,0 L10,0 10,0.7 5.7,5 10,9.3 L10,10 9.3,10 5,5.7 0.7,10 L0,10 0,9.3 4.3,5 0,0.7 z"-->
-            <!-- 대칭 X path -->
+            <!-- 1px, thickness=√2 px
+            Value="M0,0 0.7,0 5,4.3 9.3,0 L10,0 10,0.7 5.7,5 10,9.3 L10,10 9.3,10 5,5.7 0.7,10 L0,10 0,9.3 4.3,5 0,0.7 z"
+            thickness more thinner
+            Value="M0,0 0.7,0 5,4.3 9.3,0 L10,0 10,0.7 5.7,5 10,9.3 L10,10 9.3,10 5,5.7 0.7,10 L0,10 0,9.3 4.3,5 0,0.7 z" -->
             <Setter Property="Data" Value="M0,0 0.7,0 5,4.3 9.3,0 L10,0 10,0.7 5.7,5 10,9.3 L10,10 9.3,10 5,5.7 0.7,10 L0,10 0,9.3 4.3,5 0,0.7 z"/>
             <Setter Property="Fill" Value="Black"/>
-            <Setter Property="Height" Value="10"/>
-            <Setter Property="Stretch" Value="None"/>
+            <Setter Property="Height" Value="9.91"/>
+            <Setter Property="Stretch" Value="Fill"/>
             <Setter Property="Stroke" Value="Transparent"/>
-            <Setter Property="Width" Value="10"/>
+            <Setter Property="Width" Value="9.91"/>
             <Setter Property="StrokeThickness" Value="0"/>
         </Style>
+        <!-- #endregion Path Styles -->
         <!-- #region Title Button Style -->
         <Style x:Key="TitleButton_Style" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="White" />
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Height" Value="29" />
+            <Setter Property="Width" Value="45" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Top" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Margin" Value="1 0 0 0" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -94,7 +106,15 @@
         <!-- #region Close Button Style -->
         <Style x:Key="CloseButton_Style" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="White" />
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Height" Value="29" />
+            <Setter Property="Width" Value="45" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Top" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Margin" Value="1 0 0 0" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -147,65 +167,33 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="123"
-                   VerticalAlignment="Center"
-                   Margin="10 0"
-                   />
-
-            <!-- #region Minimize Button -->
+                       VerticalAlignment="Center"
+                       Margin="10 0" />
+            <!-- #region Title Buttons -->
             <Button Grid.Column="1" 
                     Name="MinimizeButton"
-                    Style="{StaticResource TitleButton_Style}"
-                    Height="29"
-                    Width="45"
-                    BorderThickness="0"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
-                    VerticalContentAlignment="Top"
-                    HorizontalContentAlignment="Left"
-                    Margin="1 0 0 0">
+                    Click="MinimizeButton_Click"
+                    Style="{StaticResource TitleButton_Style}">
                 <Path Style="{StaticResource Minimize_Path_Style}"
                       Margin="18 14 0 0"/>
-                <!--Data="M2048 1229v-205h-2048v205h2048z"-->
-                <!-- Path.Fill - Dynamic Color -->
-                <!--Fill="{DynamicResource SystemControlForegroundBaseHighBrush}"-->
             </Button>
-            <!-- #endregion -->
-            <!-- #region Maximize Button -->
-            <!--<Path Grid.Column="2" Data="M0,0 1,0 1,1 0,1 z" Fill="Transparent" HorizontalAlignment="Center" Height="10" Stretch="Fill" Stroke="Black" VerticalAlignment="Center" Width="10"/>-->
             <Button Grid.Column="2"
                     Name="MaximizeButton"
-                    Style="{StaticResource TitleButton_Style}"
-                    Height="29"
-                    Width="45"
-                    BorderThickness="0"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
-                    VerticalContentAlignment="Top"
-                    HorizontalContentAlignment="Left"
-                    Margin="1 0 0 0">
-                <Path Style="{DynamicResource Maximize_Path_Style}"
+                    Click="MaximizeButton_Click"
+                    Style="{StaticResource TitleButton_Style}">
+                <Path x:Name="MaximizeButtonPath" Style="{DynamicResource Maximize_Path_Style}"
                       Margin="17 9 0 0"/>
             </Button>
-            <!-- #endregion -->
-            <!-- #region Close Button -->
             <Button Grid.Column="3" 
                     Name="CloseButton"
-                    Style="{StaticResource CloseButton_Style}"
-                    Height="29"
-                    Width="45"
-                    BorderThickness="0"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
-                    VerticalContentAlignment="Top"
-                    HorizontalContentAlignment="Left"
-                    Margin="1 0 0 0">
-
+                    Click="CloseButton_Click"
+                    Style="{StaticResource CloseButton_Style}">
                 <Path Style="{StaticResource Close_Path_Style}" 
                       Margin="17 9 0 0"
                       Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" />
-                <!-- Fill Binding is close color inversion -->
+                <!--  Fill Binding is CloseButton mouseover path color inversion -->
             </Button>
-            <!-- #endregion -->
+            <!-- #endregion Title Buttons -->
         </Grid>
 
 
