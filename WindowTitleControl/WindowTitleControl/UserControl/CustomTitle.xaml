@@ -55,8 +55,8 @@
         <Style x:Key="TitleButton_Style" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="White" />
             <Setter Property="Foreground" Value="Black" />
-            <Setter Property="Height" Value="29" />
-            <Setter Property="Width" Value="45" />
+            <Setter Property="Height" Value="{Binding MaximizeButton_Height}" />
+            <Setter Property="Width" Value="{Binding MaximizeButton_Width}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -107,8 +107,8 @@
         <Style x:Key="CloseButton_Style" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="White" />
             <Setter Property="Foreground" Value="Black" />
-            <Setter Property="Height" Value="29" />
-            <Setter Property="Width" Value="45" />
+            <Setter Property="Height" Value="{Binding MaximizeButton_Height}" />
+            <Setter Property="Width" Value="{Binding MaximizeButton_Width}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="HorizontalAlignment" Value="Left" />

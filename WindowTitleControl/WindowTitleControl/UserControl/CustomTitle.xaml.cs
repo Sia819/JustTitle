@@ -18,6 +18,24 @@ namespace WindowTitleControl
     /// </summary>
     public partial class CustomTitle : UserControl
     {
+        public CustomTitleViewModel ViewModel
+        {
+            get 
+            {
+                if (this.DataContext is null)
+                {
+                    this.DataContext = new CustomTitleViewModel();
+                    return this.DataContext as CustomTitleViewModel;
+                }
+                else
+                    return (this.DataContext as CustomTitleViewModel);
+            }
+            set 
+            {
+                this.DataContext = value;
+            }
+        }
+
         public CustomTitle()
         {
             InitializeComponent();
@@ -52,15 +70,18 @@ namespace WindowTitleControl
 
         private void ParentWindow_StateChanged(object sender, EventArgs e)
         {
+            
             Window hostWindow = Window.GetWindow(this);
             // Window-State Depend Changing Style
             if (hostWindow.WindowState != WindowState.Maximized)
             {
+                ViewModel.MaximizeButton_Height = 21;
+
                 Style Maximize_Path_Style = (Style)FindResource("Maximize_Path_Style");
                 foreach(Setter setters in Maximize_Path_Style.Setters)
                 {
                     if (setters.Property.Name == "Height")
-                        setters.Value = 20;
+                        setters.Value = 21;
                     else if (setters.Property.Name == "Margin")
                         setters.Value = "1 0 2 0";
                 }
@@ -68,7 +89,18 @@ namespace WindowTitleControl
             }
             else
             {
+                ViewModel.MaximizeButton_Height = 29;
 
+                //Style Maximize_Path_Style = (Style)FindResource("Maximize_Path_Style");
+                //foreach (Setter setters in Maximize_Path_Style.Setters)
+                //{
+                    
+
+                //    if (setters.Property.Name == "Height")
+                //        setters.Value = 29;
+                //    else if (setters.Property.Name == "Margin")
+                //        setters.Value = "1 0 0 0";
+                //}
                 MaximizeButtonPath.Style = (Style)FindResource("Maximized_Path_Style");
             }
         }

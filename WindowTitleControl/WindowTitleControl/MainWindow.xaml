@@ -16,6 +16,7 @@
         
         <Grid Grid.Row="1">
             <Rectangle Fill="Beige"/>
+
             <TextBlock Text="UI Area"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
