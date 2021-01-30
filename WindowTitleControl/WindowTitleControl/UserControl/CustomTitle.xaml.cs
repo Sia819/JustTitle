@@ -18,9 +18,34 @@ namespace WindowTitleControl
     /// </summary>
     public partial class CustomTitle : UserControl
     {
+        public static readonly DependencyProperty MeProperty =
+            DependencyProperty.Register("Me",
+                                        typeof(string),
+                                        typeof(MainWindow),
+                                        new PropertyMetadata("", new PropertyChangedCallback(MeChanged)),
+                                        ValidateMe);
+        public string Me
+        {
+            get { return (string)GetValue(MeProperty); }
+            set { SetValue(MeProperty, value); }
+        }
+        static void MeChanged(DependencyObject property, DependencyPropertyChangedEventArgs args)
+        {
+            MainWindow main = property as MainWindow;
+
+            string value1 = args.OldValue as string;
+            string value2 = args.NewValue as string;
+        }
+        static bool ValidateMe(object obj)
+        {
+            string str = obj as string;
+            return str != null;
+        }
+
+
         public CustomTitleViewModel ViewModel
         {
-            get 
+            get
             {
                 if (this.DataContext is null)
                 {
@@ -30,7 +55,7 @@ namespace WindowTitleControl
                 else
                     return (this.DataContext as CustomTitleViewModel);
             }
-            set 
+            set
             {
                 this.DataContext = value;
             }
@@ -42,7 +67,7 @@ namespace WindowTitleControl
             SubscribeToWindowState();
         }
 
-        
+
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
@@ -59,7 +84,7 @@ namespace WindowTitleControl
             Window targetWindow = Window.GetWindow(this);
 
             _ = targetWindow.WindowState == WindowState.Normal ?
-                targetWindow.WindowState = WindowState.Maximized : 
+                targetWindow.WindowState = WindowState.Maximized :
                 targetWindow.WindowState = WindowState.Normal;
         }
 
@@ -70,7 +95,7 @@ namespace WindowTitleControl
 
         private void ParentWindow_StateChanged(object sender, EventArgs e)
         {
-            
+
             Window hostWindow = Window.GetWindow(this);
             // Window-State Depend Changing Style
             if (hostWindow.WindowState != WindowState.Maximized)
@@ -78,7 +103,7 @@ namespace WindowTitleControl
                 ViewModel.MaximizeButton_Height = 21;
 
                 Style Maximize_Path_Style = (Style)FindResource("Maximize_Path_Style");
-                foreach(Setter setters in Maximize_Path_Style.Setters)
+                foreach (Setter setters in Maximize_Path_Style.Setters)
                 {
                     if (setters.Property.Name == "Height")
                         setters.Value = 21;
@@ -94,7 +119,7 @@ namespace WindowTitleControl
                 //Style Maximize_Path_Style = (Style)FindResource("Maximize_Path_Style");
                 //foreach (Setter setters in Maximize_Path_Style.Setters)
                 //{
-                    
+
 
                 //    if (setters.Property.Name == "Height")
                 //        setters.Value = 29;
